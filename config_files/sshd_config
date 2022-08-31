@@ -1,0 +1,23 @@
+Include /etc/ssh/sshd_config.d/*.conf
+
+Port 56867
+PermitRootLogin no
+MaxAuthTries 3
+
+PubkeyAuthentication yes
+PasswordAuthentication no
+
+ChallengeResponseAuthentication no
+UsePAM yes
+
+AllowAgentForwarding no
+AllowTcpForwarding no
+X11Forwarding no
+PrintMotd no
+PermitTunnel no
+
+# Allow client to pass locale environment variables
+AcceptEnv LANG LC_*
+
+# override default of no subsystems
+Subsystem sftp	/usr/lib/openssh/sftp-server
