@@ -1,5 +1,7 @@
 # TP3 - SEC108
 
+**Author :** Amaury JASPAR
+
 Installation d'un serveur sécurisé Ubuntu 20.04
 
 * `config_files` contient les fichiers de configuration (ngix, sshd, etc.) déployés sur le système
@@ -158,5 +160,3 @@ Debian inclut une configuration par défaut qui active la jail SSHD:
 [sshd]
 enabled = true
 ```
-
-On peut maintenant essayer une connexion depuis 
