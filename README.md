@@ -66,7 +66,9 @@ On rajoute alors `umask 077` dans le `/etc/profile` pour charger cette modificat
 
 On génère une clé ssh RSA de 2048 bits. On préfèrera aujourd'hui utiliser des clés RSA de 4096bits ou des clés elliptiques de 512bits (ed25519).
 
-![ssh_keygen](ressources/images/ssh_keygen.png)
+```
+ssh-keygen -t rsa -b 2048
+```
 
 La clé publique peut ensuite être copiée vers le serveur via l'utilitaire `ssh-copy-id` :
 
@@ -78,7 +80,7 @@ Pour renre la connexion au serveur plus simple, on peut créer une configuration
 
 ![ssh_client_config](ressources/images/ssh_client_config_cnam.png)
 
-*(Note: Le port SSH côté serveur a été modifié côté serveur dans la suite du TP et a également été mis à jour dans la configuration client)*
+*(Note: Le port SSH a été modifié côté serveur dans la suite du TP et a également été mis à jour dans la configuration client)*
 
 #### Configuration serveur
 
@@ -89,6 +91,14 @@ La configuration par défaut de `sshd` est assez permissive (notamment pour perm
 * Réduction du nombre de tentatives de connexions.
 * Désactivation de l'authentification par mot de passe et remplacement par authentification par paire de clé privée et clé publique.
 * Désactivation des fonctionnalités non utilisés (X11 forwarding, tunneling, TCP forwarding...)
+
+### Cracking de mot de passes
+
+Pour le cracking de mot de passe, on créé un utilisateur `gabitbol` avec un mot de passe faible. Pour facilier le démo, on extrait la ligne correspondante dans le `/etc/shadow` et on lance john sur ce nouveau fichier. 
+
+Le mot de passe est rapidement affiché car il se trouve dans les wordlists de base de john, ici: `george`.
+
+![john](ressources/images/john.png)
 
 ### Iptables
 
@@ -141,6 +151,7 @@ sudo ip6tables -L -n -v -t filter
 ```bash
 sudo apt install fail2ban
 sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
 ```
 
 Configuration: 
@@ -159,4 +170,10 @@ Debian inclut une configuration par défaut qui active la jail SSHD:
 ```
 [sshd]
 enabled = true
+```
+
+On peut ensuite appliquer la configuration:
+
+```
+sudo systemctl restart fail2ban
 ```
